@@ -1,0 +1,59 @@
+name: MedicationLock
+options:
+  bundleIdPrefix: com.mattgottfried.ioniqos
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    DEVELOPMENT_TEAM: ""  # Fill in your Apple Developer Team ID
+
+targets:
+  MedicationLock:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - MedicationLock
+    resources:
+      - MedicationLock/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mattgottfried.ioniqos
+        INFOPLIST_FILE: MedicationLock/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MedicationLock/Resources/MedicationLock.entitlements
+    dependencies:
+      - target: MedicationLockMonitor
+      - target: MedicationLockShield
+    entitlements:
+      path: MedicationLock/Resources/MedicationLock.entitlements
+
+  MedicationLockMonitor:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - MedicationLockMonitor
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mattgottfried.ioniqos.monitor
+        INFOPLIST_FILE: MedicationLockMonitor/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MedicationLockMonitor/MedicationLockMonitor.entitlements
+    entitlements:
+      path: MedicationLockMonitor/MedicationLockMonitor.entitlements
+
+  MedicationLockShield:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - MedicationLockShield
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.mattgottfried.ioniqos.shield
+        INFOPLIST_FILE: MedicationLockShield/Info.plist
+        CODE_SIGN_ENTITLEMENTS: MedicationLockShield/MedicationLockShield.entitlements
+    entitlements:
+      path: MedicationLockShield/MedicationLockShield.entitlements
