@@ -1,4 +1,6 @@
-# IoniqOS — iPhone Medication Lockdown App
+# PillGate — iPhone Medication Lockdown App
+
+> Display name: **PillGate**. Bundle IDs and the App Group keep the historical `ioniqos` prefix — they're registered with Apple and renaming them would invalidate the App IDs and entitlement request. The `IoniqOS/` directory name is likewise historical.
 
 Forces a daily medication habit: at a configured time the iPhone shields selected apps via Apple's Screen Time / Family Controls API. The only way to remove the shield is to take a live camera photo of the medication bottle inside the app.
 
@@ -108,4 +110,4 @@ Notes:
 2. **Not MDM-supervised** — a motivated user can disable Screen Time in Settings manually. This is intentional for personal use.
 3. **Monitor extension runtime** — `intervalDidStart` gets ~5 seconds; keep it fast (it is).
 4. **Location "Always" permission** must be granted in Settings → Privacy → Location Services for background geofencing to work.
-5. **Shield primary button** opens `ioniqos://unlock` — iOS will open the main app, where the camera unlock flow lives.
+5. **Shield primary button** opens `pillgate://unlock` — iOS will open the main app, where the camera unlock flow lives.

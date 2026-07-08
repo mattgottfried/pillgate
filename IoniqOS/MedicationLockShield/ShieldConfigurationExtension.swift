@@ -31,11 +31,11 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 color: .label
             ),
             subtitle: ShieldConfiguration.Label(
-                text: "Open IoniqOS to take a photo and unlock your phone.",
+                text: "Open PillGate to take a photo and unlock your phone.",
                 color: .secondaryLabel
             ),
             primaryButtonLabel: ShieldConfiguration.Label(
-                text: "Open IoniqOS",
+                text: "Open PillGate",
                 color: .white
             ),
             primaryButtonBackgroundColor: .systemBlue

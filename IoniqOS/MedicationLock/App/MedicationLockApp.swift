@@ -22,8 +22,8 @@ struct MedicationLockApp: App {
                     ) { _ in gm.setupHomeGeofence() }
                 }
                 .onOpenURL { url in
-                    // Handle ioniqos://unlock deep link from shield button
-                    if url.scheme == "ioniqos", url.host == "unlock" {
+                    // Handle pillgate://unlock deep link from shield button
+                    if url.scheme == "pillgate", url.host == "unlock" {
                         // App is already open; ContentView will show camera flow
                     }
                 }

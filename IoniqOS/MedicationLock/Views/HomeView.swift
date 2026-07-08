@@ -26,7 +26,7 @@ struct HomeView: View {
                 }
             }
             .padding()
-            .navigationTitle("IoniqOS")
+            .navigationTitle("PillGate")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

@@ -12,6 +12,8 @@
     <string>6.0</string>
     <key>CFBundleName</key>
     <string>$(PRODUCT_NAME)</string>
+    <key>CFBundleDisplayName</key>
+    <string>PillGate</string>
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
@@ -23,11 +25,11 @@
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>NSCameraUsageDescription</key>
-    <string>IoniqOS needs camera access to take a photo of your medication bottle to unlock your device.</string>
+    <string>PillGate needs camera access to take a photo of your medication bottle to unlock your device.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>IoniqOS needs your location at all times to detect when you arrive home so it can apply the medication lock.</string>
+    <string>PillGate needs your location at all times to detect when you arrive home so it can apply the medication lock.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>IoniqOS needs your location to set your home geofence.</string>
+    <string>PillGate needs your location to set your home geofence.</string>
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>
@@ -53,7 +55,7 @@
         <dict>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>ioniqos</string>
+                <string>pillgate</string>
             </array>
         </dict>
     </array>
