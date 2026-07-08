@@ -8,11 +8,16 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     }
 
     override func configuration(shielding application: Application,
-                                in webDomain: WebDomain) -> ShieldConfiguration {
+                                in category: ActivityCategory) -> ShieldConfiguration {
         makeConfiguration()
     }
 
     override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
+        makeConfiguration()
+    }
+
+    override func configuration(shielding webDomain: WebDomain,
+                                in category: ActivityCategory) -> ShieldConfiguration {
         makeConfiguration()
     }
 
