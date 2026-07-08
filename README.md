@@ -67,6 +67,41 @@ open MedicationLock.xcodeproj
 
 ---
 
+## Xcode Cloud → TestFlight
+
+The `.xcodeproj` is generated (not committed), so Xcode Cloud regenerates it on every build via `IoniqOS/ci_scripts/ci_post_clone.sh` (installs XcodeGen, runs `xcodegen generate`). The shared `MedicationLock` scheme it needs is defined in `project.yml`.
+
+### One-time Apple setup (do this first)
+
+1. **Request the Family Controls *distribution* entitlement.** Development builds only need the capability, but TestFlight/App Store signing requires Apple's approval per bundle ID. Submit the request form at <https://developer.apple.com/contact/request/family-controls-distribution> for **all three** bundle IDs:
+   - `com.mattgottfried.ioniqos`
+   - `com.mattgottfried.ioniqos.monitor`
+   - `com.mattgottfried.ioniqos.shield`
+
+   Approval typically takes days to a few weeks. Until it's granted, archive builds will fail signing for TestFlight — everything else below can still be set up in the meantime.
+2. In [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list), make sure the three App IDs exist with **Family Controls** and **App Groups** (`group.com.mattgottfried.ioniqos`) enabled.
+3. In [App Store Connect](https://appstoreconnect.apple.com) → Apps → **+ New App**, create the app record with bundle ID `com.mattgottfried.ioniqos`.
+
+### Create the workflow
+
+1. Put your Team ID in `project.yml` (`DEVELOPMENT_TEAM`), run `xcodegen generate`, and open `MedicationLock.xcodeproj`.
+2. In Xcode: **Integrate → Xcode Cloud → Create Workflow…** (or Product → Xcode Cloud). Select the `MedicationLock` product.
+3. Grant Xcode Cloud access to the GitHub repo when prompted (it walks you through installing the Xcode Cloud GitHub app on `mattgottfried/medlock`).
+4. Edit the workflow:
+   - **Environment**: latest released Xcode, latest macOS.
+   - **Start Conditions**: branch changes on your release branch (e.g. `main`).
+   - **Actions**: **Archive — iOS**, with *TestFlight (Internal Testing Only)* as the deployment preparation.
+   - **Post-Actions**: **TestFlight Internal Testing** → add your internal tester group.
+5. Save and click **Start Build**. Xcode Cloud clones the repo, runs `ci_post_clone.sh` to generate the project, archives with cloud-managed signing, and uploads to TestFlight.
+
+Notes:
+- Xcode Cloud manages code signing automatically — no certificates or profiles to upload.
+- Xcode Cloud auto-increments `CFBundleVersion` for TestFlight builds; you never bump it by hand. Bump `MARKETING_VERSION` in `project.yml` for user-facing releases.
+- `ITSAppUsesNonExemptEncryption` is set to `false` in Info.plist, so builds skip the export-compliance questionnaire and become testable immediately.
+- Install the TestFlight app on your iPhone and accept the tester invite emailed by App Store Connect.
+
+---
+
 ## Limitations
 
 1. **Simulator not supported** — Family Controls APIs are device-only.
