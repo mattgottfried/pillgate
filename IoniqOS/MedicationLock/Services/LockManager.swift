@@ -5,7 +5,7 @@ import FamilyControls
 final class LockManager {
     static let shared = LockManager()
     private let store = ManagedSettingsStore()
-    private let appGroupID = "group.com.mattgottfried.ioniqos"
+    private let appGroupID = "group.com.mattgottfried.medlock"
     private var defaults: UserDefaults? { UserDefaults(suiteName: appGroupID) }
 
     func applyLock() {

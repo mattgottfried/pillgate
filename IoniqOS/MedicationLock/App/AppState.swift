@@ -9,7 +9,7 @@ enum LockStatus: String {
 
 @Observable
 final class AppState {
-    static let appGroupID = "group.com.mattgottfried.ioniqos"
+    static let appGroupID = "group.com.mattgottfried.medlock"
 
     var lockStatus: LockStatus = .unlocked
     var settings: AppSettings = AppSettings()

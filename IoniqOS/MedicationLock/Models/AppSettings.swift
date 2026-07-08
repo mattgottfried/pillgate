@@ -8,7 +8,7 @@ struct AppSettings: Codable {
     var homeLongitude: Double = 0.0
     var homeIsSet: Bool = false
 
-    static let appGroupID = "group.com.mattgottfried.ioniqos"
+    static let appGroupID = "group.com.mattgottfried.medlock"
 
     static func load() -> AppSettings {
         guard let defaults = UserDefaults(suiteName: appGroupID),

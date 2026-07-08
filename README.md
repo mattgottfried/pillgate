@@ -1,6 +1,6 @@
 # PillGate — iPhone Medication Lockdown App
 
-> Display name: **PillGate**. Bundle IDs and the App Group keep the historical `ioniqos` prefix — they're registered with Apple and renaming them would invalidate the App IDs and entitlement request. The `IoniqOS/` directory name is likewise historical.
+> Display name: **PillGate**. Bundle IDs use the `com.mattgottfried.medlock` prefix, matching the App IDs registered with Apple (Family Controls distribution approved). The `IoniqOS/` directory name is historical.
 
 Forces a daily medication habit: at a configured time the iPhone shields selected apps via Apple's Screen Time / Family Controls API. The only way to remove the shield is to take a live camera photo of the medication bottle inside the app.
 
@@ -18,7 +18,7 @@ Three targets in one Xcode project:
 | `MedicationLockMonitor` | App Extension | `DeviceActivityMonitor` — fires at scheduled time |
 | `MedicationLockShield` | App Extension | `ShieldConfiguration` — customises the lock overlay |
 
-Shared state flows through an App Group (`group.com.mattgottfried.ioniqos`) in `UserDefaults`.
+Shared state flows through an App Group (`group.com.mattgottfried.medlock`) in `UserDefaults`.
 
 ### State machine
 
@@ -76,13 +76,13 @@ The `.xcodeproj` is generated (not committed), so Xcode Cloud regenerates it on 
 ### One-time Apple setup (do this first)
 
 1. **Request the Family Controls *distribution* entitlement.** Development builds only need the capability, but TestFlight/App Store signing requires Apple's approval per bundle ID. Submit the request form at <https://developer.apple.com/contact/request/family-controls-distribution> for **all three** bundle IDs:
-   - `com.mattgottfried.ioniqos`
-   - `com.mattgottfried.ioniqos.monitor`
-   - `com.mattgottfried.ioniqos.shield`
+   - `com.mattgottfried.medlock`
+   - `com.mattgottfried.medlock.monitor`
+   - `com.mattgottfried.medlock.shield`
 
    Approval typically takes days to a few weeks. Until it's granted, archive builds will fail signing for TestFlight — everything else below can still be set up in the meantime.
-2. In [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list), make sure the three App IDs exist with **Family Controls** and **App Groups** (`group.com.mattgottfried.ioniqos`) enabled.
-3. In [App Store Connect](https://appstoreconnect.apple.com) → Apps → **+ New App**, create the app record with bundle ID `com.mattgottfried.ioniqos`.
+2. In [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list), make sure the three App IDs exist with **Family Controls** and **App Groups** (`group.com.mattgottfried.medlock`) enabled.
+3. In [App Store Connect](https://appstoreconnect.apple.com) → Apps → **+ New App**, create the app record with bundle ID `com.mattgottfried.medlock`.
 
 ### Create the workflow
 

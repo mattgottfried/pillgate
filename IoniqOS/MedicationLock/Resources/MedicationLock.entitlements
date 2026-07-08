@@ -6,7 +6,7 @@
     <true/>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.com.mattgottfried.ioniqos</string>
+        <string>group.com.mattgottfried.medlock</string>
     </array>
 </dict>
 </plist>

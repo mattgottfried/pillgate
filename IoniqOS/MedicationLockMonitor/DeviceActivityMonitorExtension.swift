@@ -4,7 +4,7 @@ import ManagedSettings
 import FamilyControls
 
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-    private let appGroupID = "group.com.mattgottfried.ioniqos"
+    private let appGroupID = "group.com.mattgottfried.medlock"
     private var defaults: UserDefaults? { UserDefaults(suiteName: appGroupID) }
 
     override func intervalDidStart(for activity: DeviceActivityName) {
