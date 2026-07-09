@@ -38,6 +38,7 @@ targets:
         INFOPLIST_FILE: MedicationLock/Resources/Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_ENTITLEMENTS: MedicationLock/Resources/MedicationLock.entitlements
+        TARGETED_DEVICE_FAMILY: "1"
     dependencies:
       - target: MedicationLockMonitor
       - target: MedicationLockShield
