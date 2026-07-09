@@ -2,7 +2,7 @@ name: MedicationLock
 options:
   bundleIdPrefix: com.mattgottfried.medlock
   deploymentTarget:
-    iOS: "16.0"
+    iOS: "17.0"
   xcodeVersion: "15.0"
 
 settings:
@@ -27,7 +27,7 @@ targets:
   MedicationLock:
     type: application
     platform: iOS
-    deploymentTarget: "16.0"
+    deploymentTarget: "17.0"
     sources:
       - MedicationLock
     resources:
@@ -47,7 +47,7 @@ targets:
   MedicationLockMonitor:
     type: app-extension
     platform: iOS
-    deploymentTarget: "16.0"
+    deploymentTarget: "17.0"
     sources:
       - MedicationLockMonitor
     settings:
@@ -61,7 +61,7 @@ targets:
   MedicationLockShield:
     type: app-extension
     platform: iOS
-    deploymentTarget: "16.0"
+    deploymentTarget: "17.0"
     sources:
       - MedicationLockShield
     settings:
