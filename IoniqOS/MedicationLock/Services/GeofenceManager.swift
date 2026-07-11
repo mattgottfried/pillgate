@@ -3,7 +3,7 @@ import CoreLocation
 
 final class GeofenceManager: NSObject {
     private let locationManager = CLLocationManager()
-    private let appGroupID = "group.com.mattgottfried.medlock"
+    private let appGroupID = "group.com.mattgottfried.pillgate"
     private weak var appState: AppState?
 
     private var defaults: UserDefaults? { UserDefaults(suiteName: appGroupID) }
