@@ -31,7 +31,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 color: .label
             ),
             subtitle: ShieldConfiguration.Label(
-                text: "Open PillGate to take a photo and unlock your phone.",
+                text: "Open PillGate and tap your medication tag to unlock.",
                 color: .secondaryLabel
             ),
             primaryButtonLabel: ShieldConfiguration.Label(

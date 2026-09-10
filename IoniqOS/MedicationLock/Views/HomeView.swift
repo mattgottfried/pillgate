@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(AppState.self) private var appState
-    @State private var showCamera = false
+    @State private var showUnlock = false
     @State private var showSettings = false
 
     var body: some View {
@@ -12,9 +12,9 @@ struct HomeView: View {
 
                 if appState.lockStatus == .locked {
                     Button {
-                        showCamera = true
+                        showUnlock = true
                     } label: {
-                        Label("Take Photo to Unlock", systemImage: "camera.fill")
+                        Label("Tap to Unlock", systemImage: "wave.3.right")
                             .font(.headline)
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -36,8 +36,8 @@ struct HomeView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showCamera) {
-                CameraView()
+            .sheet(isPresented: $showUnlock) {
+                NFCUnlockView()
                     .environment(appState)
             }
             .sheet(isPresented: $showSettings) {
@@ -94,7 +94,7 @@ struct HomeView: View {
     private var statusDescription: String {
         switch appState.lockStatus {
         case .unlocked: return "Your apps are accessible. Lock will apply at the scheduled time."
-        case .locked: return "Apps are shielded. Take a photo of your medication to unlock."
+        case .locked: return "Apps are shielded. Tap your medication tag to unlock."
         case .pendingHomeArrival: return "Lock will apply when you arrive home."
         }
     }

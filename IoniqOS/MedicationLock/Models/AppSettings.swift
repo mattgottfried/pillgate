@@ -7,6 +7,7 @@ struct AppSettings: Codable {
     var homeLatitude: Double = 0.0
     var homeLongitude: Double = 0.0
     var homeIsSet: Bool = false
+    var registeredTagUID: String? = nil
 
     static let appGroupID = "group.com.mattgottfried.pillgate"
 

@@ -1,8 +1,8 @@
 # PillGate — iPhone Medication Lockdown App
 
-> Display name: **PillGate**. Bundle IDs use the `com.mattgottfried.pillgate` prefix, matching the App IDs registered with Apple (Family Controls distribution approved). The `IoniqOS/` directory name is historical.
+> Display name: **PillGate**. Bundle IDs use the `com.mattgottfried.pillgate` prefix. The `IoniqOS/` directory name is historical.
 
-Forces a daily medication habit: at a configured time the iPhone shields selected apps via Apple's Screen Time / Family Controls API. The only way to remove the shield is to take a live camera photo of the medication bottle inside the app.
+Forces a daily medication habit: at a configured time the iPhone shields selected apps via Apple's Screen Time / Family Controls API. The only way to remove the shield is to tap an NFC tag affixed to the medication bottle against the phone.
 
 Location-awareness prevents the lock from firing when you're away from home — it queues and fires on arrival instead.
 
@@ -26,7 +26,7 @@ Shared state flows through an App Group (`group.com.mattgottfried.pillgate`) in 
 unlocked ──[time fires + at home]──► locked
 unlocked ──[time fires + away]──────► pendingHomeArrival
 pendingHomeArrival ──[arrive home]──► locked
-locked ──[camera photo taken]───────► unlocked
+locked ──[medication tag scanned]────► unlocked
 ```
 
 ---
@@ -36,7 +36,7 @@ locked ──[camera photo taken]───────► unlocked
 ### Prerequisites
 
 1. **Apple Developer Program membership** (paid) — required for the `com.apple.developer.family-controls` entitlement.
-2. Enable **Family Controls** capability in your App ID on [developer.apple.com](https://developer.apple.com/account/resources/identifiers/list).
+2. Enable **Family Controls**, **App Groups**, and **Near Field Communication Tag Reading** capabilities on all three App IDs at [developer.apple.com](https://developer.apple.com/account/resources/identifiers/list).
 3. Set your **Team ID** in `project.yml` under `settings.base.DEVELOPMENT_TEAM`.
 4. Install [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`
 
@@ -51,8 +51,8 @@ open MedicationLock.xcodeproj
 ### First launch (on a real device)
 
 1. Run the app — it will request **Screen Time / Family Controls** permission (system alert, one-time).
-2. Tap **Settings**, choose a lock time, select apps to block, and tap **Set Home to Current Location**.
-3. Tap **Schedule Lock**.
+2. Tap **Settings**, choose a lock time, select apps to block, tap **Set Home to Current Location**, and tap **Register Tag** to pair an NFC tag (a plain NTAG213/215/216 sticker works — no NDEF formatting required, the app matches on the tag's UID).
+3. Affix the registered tag to your medication bottle, then tap **Schedule Lock**.
 
 ---
 
@@ -65,7 +65,9 @@ open MedicationLock.xcodeproj
 | Geofence | Set home, walk ~150 m away — `isAtHome` flips to `false` in the App Group container (Xcode → Devices → App Container) |
 | Schedule | Set lock time 2 min from now; shields apply after timer fires |
 | Pending flow | Manually set `isAtHome = false`, set lock time → confirm `lockPending = true` → simulate geofence entry → shields apply |
-| Unlock | With shields active, open MedicationLock (not shielded), tap "Take Photo" — shields clear after capture |
+| Tag registration | In Settings, tap "Register Tag", hold phone to an NFC tag — "Tag Registered" checkmark appears |
+| Unlock | With shields active, open MedicationLock (not shielded), tap "Scan Tag" and hold the phone to the registered tag — shields clear on a match |
+| Wrong tag rejected | Scan a different, unregistered tag while locked — app shows "That's not your medication tag" and stays locked |
 
 ---
 
@@ -88,7 +90,7 @@ The `.xcodeproj` is generated (not committed), so Xcode Cloud regenerates it on 
 
 1. Put your Team ID in `project.yml` (`DEVELOPMENT_TEAM`), run `xcodegen generate`, and open `MedicationLock.xcodeproj`.
 2. In Xcode: **Integrate → Xcode Cloud → Create Workflow…** (or Product → Xcode Cloud). Select the `MedicationLock` product.
-3. Grant Xcode Cloud access to the GitHub repo when prompted (it walks you through installing the Xcode Cloud GitHub app on `mattgottfried/medlock`).
+3. Grant Xcode Cloud access to the GitHub repo when prompted (it walks you through installing the Xcode Cloud GitHub app on `mattgottfried/pillgate`).
 4. Edit the workflow:
    - **Environment**: latest released Xcode, latest macOS.
    - **Start Conditions**: branch changes on your release branch (e.g. `main`).
@@ -110,4 +112,5 @@ Notes:
 2. **Not MDM-supervised** — a motivated user can disable Screen Time in Settings manually. This is intentional for personal use.
 3. **Monitor extension runtime** — `intervalDidStart` gets ~5 seconds; keep it fast (it is).
 4. **Location "Always" permission** must be granted in Settings → Privacy → Location Services for background geofencing to work.
-5. **Shield primary button** opens `pillgate://unlock` — iOS will open the main app, where the camera unlock flow lives.
+5. **Shield primary button** opens `pillgate://unlock` — iOS will open the main app, where the NFC unlock flow lives.
+6. **NFC hardware required** — the app declares `nfc` as a required device capability, so it won't install on devices without an NFC controller (iPhone 7 and later).

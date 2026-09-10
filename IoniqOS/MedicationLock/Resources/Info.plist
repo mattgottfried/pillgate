@@ -24,8 +24,8 @@
     <false/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>NSCameraUsageDescription</key>
-    <string>PillGate needs camera access to take a photo of your medication bottle to unlock your device.</string>
+    <key>NFCReaderUsageDescription</key>
+    <string>PillGate needs NFC access to read the tag on your medication bottle to unlock your device.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>PillGate needs your location at all times to detect when you arrive home so it can apply the medication lock.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
@@ -45,6 +45,7 @@
     <key>UIRequiredDeviceCapabilities</key>
     <array>
         <string>armv7</string>
+        <string>nfc</string>
     </array>
     <key>UISupportedInterfaceOrientations</key>
     <array>

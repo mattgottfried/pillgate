@@ -2,7 +2,7 @@ import SwiftUI
 
 struct LockScreenView: View {
     @Environment(AppState.self) private var appState
-    @State private var showCamera = false
+    @State private var showUnlock = false
 
     var body: some View {
         ZStack {
@@ -18,16 +18,16 @@ struct LockScreenView: View {
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
 
-                Text("Take a photo of your medication bottle to unlock your phone.")
+                Text("Tap your medication tag to unlock your phone.")
                     .font(.body)
                     .foregroundStyle(.white.opacity(0.8))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
 
                 Button {
-                    showCamera = true
+                    showUnlock = true
                 } label: {
-                    Label("Open Camera", systemImage: "camera.fill")
+                    Label("Tap to Unlock", systemImage: "wave.3.right")
                         .font(.headline)
                         .padding()
                         .frame(maxWidth: .infinity)
@@ -38,8 +38,8 @@ struct LockScreenView: View {
                 .padding(.horizontal, 40)
             }
         }
-        .sheet(isPresented: $showCamera) {
-            CameraView()
+        .sheet(isPresented: $showUnlock) {
+            NFCUnlockView()
                 .environment(appState)
         }
     }

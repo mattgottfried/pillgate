@@ -9,6 +9,9 @@ struct SettingsView: View {
     @State private var showActivityPicker = false
     @State private var activitySelection = FamilyActivitySelection()
     @State private var isScheduled = false
+    @State private var nfcManager = NFCManager()
+    @State private var isRegisteringTag = false
+    @State private var tagError: String?
 
     var body: some View {
         NavigationStack {
@@ -42,6 +45,24 @@ struct SettingsView: View {
                 Section("Apps to Block") {
                     Button("Select Apps") {
                         showActivityPicker = true
+                    }
+                }
+
+                Section("Medication Tag") {
+                    if appState.settings.registeredTagUID != nil {
+                        LabeledContent("Tag Registered") {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                        }
+                    }
+                    Button(isRegisteringTag ? "Scanning…" : (appState.settings.registeredTagUID == nil ? "Register Tag" : "Re-Register Tag")) {
+                        registerTag()
+                    }
+                    .disabled(isRegisteringTag)
+                    if let tagError {
+                        Text(tagError)
+                            .font(.caption)
+                            .foregroundStyle(.red)
                     }
                 }
 
@@ -98,6 +119,23 @@ struct SettingsView: View {
     private func saveActivitySelection(_ selection: FamilyActivitySelection) {
         guard let data = try? JSONEncoder().encode(selection) else { return }
         UserDefaults(suiteName: AppSettings.appGroupID)?.set(data, forKey: "selectedAppsData")
+    }
+
+    private func registerTag() {
+        isRegisteringTag = true
+        tagError = nil
+        nfcManager.registerTag { result in
+            isRegisteringTag = false
+            switch result {
+            case .success(let uid):
+                var updated = appState.settings
+                updated.registeredTagUID = uid
+                updated.save()
+                appState.settings = updated
+            case .failure(let error):
+                tagError = error.localizedDescription
+            }
+        }
     }
 }
 
